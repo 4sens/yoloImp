@@ -1,6 +1,6 @@
 from ultralytics import YOLO
 
-model = YOLO("yolo26n.pt")  # load a pretrained model (recommended for training)
+model = YOLO("best.pt")  # load a pretrained model (recommended for training)
 
 # Train the model
 results = model.train(data="./dataset3/data.yaml", 
@@ -9,7 +9,7 @@ results = model.train(data="./dataset3/data.yaml",
     save_period=1,
     batch=16,      # Higher than 16 on CPU often yields diminishing returns
     workers=12,     # Increase this to use more of your CPU cores
-    device=0,       # Use GPU (CUDA); set to 'cpu' if no GPU available
+    device='cpu',       # Use GPU (CUDA); set to 'cpu' if no GPU available
 
     # --- AUGMENTATION SETTINGS ---
     degrees=15.0,    # Rotation +- 15 degrees (handles tilted cameras/postures)
