@@ -1,9 +1,7 @@
 import os
 from ultralytics import YOLO
 
-# Use a local checkpoint if available, otherwise download the base YOLO model
-_checkpoint = "best.pt" if os.path.exists("best.pt") else "yolov8n.pt"
-model = YOLO(_checkpoint)
+model = YOLO("yolo26n.pt")
 
 # Train the model
 results = model.train(data="./dataset3/data.yaml", 
