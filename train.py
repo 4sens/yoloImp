@@ -1,6 +1,9 @@
+import os
 from ultralytics import YOLO
 
-model = YOLO("best.pt")  # load a pretrained model (recommended for training)
+# Use a local checkpoint if available, otherwise download the base YOLO model
+_checkpoint = "best.pt" if os.path.exists("best.pt") else "yolov8n.pt"
+model = YOLO(_checkpoint)
 
 # Train the model
 results = model.train(data="./dataset3/data.yaml", 
@@ -8,11 +11,9 @@ results = model.train(data="./dataset3/data.yaml",
     imgsz=1080,
     save_period=1,
     batch=16,      # Higher than 16 on CPU often yields diminishing returns
-    workers=12,     # Increase this to use more of your CPU cores
-    device='cpu',       # Use GPU (CUDA); set to 'cpu' if no GPU available
-
+    device=0,       # Use GPU (CUDA); set to 'cpu' if no GPU available
     # --- AUGMENTATION SETTINGS ---
-    degrees=15.0,    # Rotation +- 15 degrees (handles tilted cameras/postures)
+    degrees=90.0,    # Rotation +- 15 degrees (handles tilted cameras/postures)
     hsv_h=0.015,     # Color: Hue shift (handles different suit colors/fabrics)
     hsv_s=0.7,       # Color: Saturation (handles vibrant vs. dull lighting)
     hsv_v=0.4,       # Color: Value/Brightness (handles shadows/overexposure)
